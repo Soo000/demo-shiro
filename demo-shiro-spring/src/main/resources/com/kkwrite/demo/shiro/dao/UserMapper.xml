@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kkwrite.demo.shiro.dao.UserDao">
+
+	<resultMap type="User" id="UserResult">
+		<result property="userId" column="user_id"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+	</resultMap>
+	
+	<select id="getByUsername" parameterType="String" resultMap="UserResult">
+		select user_id userId, username, password from t_user where username = #{username}
+	</select>
+	
+	<select id="getRoles" parameterType="String" resultType="String">		
+		select <!-- a.username, b.role_id,  -->c.role_code
+		from t_user a inner join t_user_role b inner join t_role c
+		on a.user_id = b.user_id and b.role_id = c.role_id
+		where a.username = #{username}
+	</select>
+	
+	<select id="getPermissions" parameterType="String" resultType="String">
+		SELECT
+            d.permission_id permissionId
+		FROM
+		    t_user a,
+		    t_user_role b,
+		    t_role_permission c,
+		    t_permission d
+		WHERE
+		    b.role_id = c.role_id
+		AND c.permission_id = d.permission_id
+		AND a.username = #{username}
+	</select>
+
+</mapper> 
