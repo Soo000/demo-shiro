@@ -3,9 +3,25 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
+	
+	<!-- 指定 ini 环境类 -->
+	<context-param>
+	   <param-name>shiroEnvironmentClass</param-name>
+	   <param-value>org.apache.shiro.web.env.IniWebEnvironment</param-value>
+	</context-param>
+	
+	<!-- 指定配置文件路径 -->
+	<context-param>
+	   <param-name>shiroConfigLoactions</param-name>
+	   <param-value>classpath:shiro.ini</param-value>
+	</context-param>
+	
+	<!-- 环境加载监听器 -->
 	<listener>
 	    <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
 	</listener>
+	
+	<!-- shiro 入口 -->
 	<filter>
 		<filter-name>ShiroFilter</filter-name>
 		<filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
@@ -15,25 +31,8 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 	
-	<servlet>
-	   <servlet-name>loginServlet</servlet-name>
-	   <servlet-class>com.kkwrite.demo.shiro.servlet.LoginServlet</servlet-class>
-	</servlet>
-	<servlet-mapping>
-	   <servlet-name>loginServlet</servlet-name>
-	   <url-pattern>/login</url-pattern>
-	</servlet-mapping>
-	
-	<servlet>
-       <servlet-name>adminServlet</servlet-name>
-       <servlet-class>com.kkwrite.demo.shiro.servlet.AdminServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-       <servlet-name>adminServlet</servlet-name>
-       <url-pattern>/admin</url-pattern>
-    </servlet-mapping>
-	
+	<!-- 欢迎页面 -->
 	<welcome-file-list>
-		<welcome-file>jsp/index.jsp</welcome-file>
+		<welcome-file>toLogin</welcome-file>
 	</welcome-file-list>
 </web-app>

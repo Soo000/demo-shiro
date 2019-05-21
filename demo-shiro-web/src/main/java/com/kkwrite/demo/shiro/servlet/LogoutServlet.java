@@ -18,8 +18,8 @@ import org.apache.shiro.subject.Subject;
  *
  * @author Soosky Wang
  */
-@WebServlet(name = "loginServlet", urlPatterns = "/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "logoutServlet", urlPatterns = "/logout")
+public class LogoutServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 4017282184883228099L;
 
@@ -32,20 +32,15 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) 
 			throws ServletException, IOException {
-		String username = req.getParameter("username");
-		String password = req.getParameter("password");
-
 		Subject subject = SecurityUtils.getSubject();
-		UsernamePasswordToken token = new UsernamePasswordToken(username, password);
 		
 		try {
-			subject.login(token);
-			req.getRequestDispatcher("WEB-INF/pages/main.jsp").forward(req, resp);
+			subject.logout();
 		} catch (AuthenticationException e) {
 			e.printStackTrace();
-			req.setAttribute("msg", "用户名或密码错误");
-			req.getRequestDispatcher("login.jsp").forward(req, resp);
 		}
+		
+		resp.sendRedirect("login.jsp");
 	}
 
 }
