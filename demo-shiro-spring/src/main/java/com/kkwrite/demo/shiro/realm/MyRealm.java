@@ -27,7 +27,7 @@ public class MyRealm extends AuthorizingRealm {
 		String userName = (String) token.getPrincipal();
 		User user = userService.getByUserName(userName);
 		if (user != null) {
-			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), "xx");
+			AuthenticationInfo authcInfo = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
 			return authcInfo;
 		} else {
 			return null;
@@ -40,9 +40,12 @@ public class MyRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String userName = (String) principals.getPrimaryPrincipal();
+		
 		SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+		
 		authorizationInfo.setRoles(userService.getRoles(userName));
 		authorizationInfo.setStringPermissions(userService.getPermissions(userName));
+		
 		return authorizationInfo;
 	}
 

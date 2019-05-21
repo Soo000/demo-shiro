@@ -12,17 +12,19 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd  
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">    
-        
+    
 	<!-- 自动扫描 -->
 	<context:component-scan base-package="com.kkwrite.demo.shiro" />
 	
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties"/>
+	
 	<!-- 配置数据源 -->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://192.168.1.118:4306/demo-shiro-db?characterEncoding=utf8&amp;useSSL=false"/>
-		<property name="username" value="root"/>
-		<property name="password" value="1qa@WS"/>
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url" value="${jdbc.url}"/>
+		<property name="username" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
 	</bean>
 
 	<!-- 配置mybatis的sqlSessionFactory -->
@@ -76,6 +78,5 @@
     </aop:config>
     
     <!-- shiro -->
-   
    <import resource="spring-shiro.xml"/>
 </beans>

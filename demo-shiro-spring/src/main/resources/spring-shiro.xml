@@ -18,7 +18,7 @@
     
     <!-- 安全管理器 -->
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">  
-      <property name="realm" ref="myRealm"/>  
+      <property name="realm" ref="myRealm"/>
     </bean>  
     
     <!-- Shiro过滤器 -->

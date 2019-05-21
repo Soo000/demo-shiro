@@ -17,20 +17,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getRoles" parameterType="String" resultType="String">		
 		select <!-- a.username, b.role_id,  -->c.role_code
 		from t_user a inner join t_user_role b inner join t_role c
-		on a.user_id = b.user_id and b.role_id = c.role_id
+		on a.username = b.username and b.role_code = c.role_code
 		where a.username = #{username}
 	</select>
 	
 	<select id="getPermissions" parameterType="String" resultType="String">
 		SELECT
-            d.permission_id permissionId
+            d.permission_value permissionValue
 		FROM
 		    t_user a,
 		    t_user_role b,
 		    t_role_permission c,
 		    t_permission d
 		WHERE
-		    b.role_id = c.role_id
+		    b.role_code = c.role_code
 		AND c.permission_id = d.permission_id
 		AND a.username = #{username}
 	</select>
