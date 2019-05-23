@@ -19,8 +19,8 @@ public class ShiroJseApp {
 
 	public static void main(String[] args) {
 		// 通过 SecurityUtils 将 securityManager 绑定到上下文中
-		SecurityUtils.setSecurityManager(getIniSecurityManger());
-		//SecurityUtils.setSecurityManager(getDefaultSecurityManager());
+		//SecurityUtils.setSecurityManager(getIniSecurityManger());
+		SecurityUtils.setSecurityManager(getDefaultSecurityManager());
 		
 		// 主体。从上下文中获取主体
 		Subject subject = SecurityUtils.getSubject();

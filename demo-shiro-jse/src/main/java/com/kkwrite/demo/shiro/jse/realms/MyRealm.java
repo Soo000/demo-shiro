@@ -3,7 +3,6 @@ package com.kkwrite.demo.shiro.jse.realms;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -42,17 +41,15 @@ public class MyRealm implements Realm {
 	public AuthenticationInfo getAuthenticationInfo(AuthenticationToken token) 
 			throws AuthenticationException {
 		String username = (String) token.getPrincipal();
-		String password = String.valueOf((char[]) token.getCredentials());
+		
+		// 从数据库里面查出来的 dbPassword 
+		String dbPassword = "123456";
 		
 		if (!"root".equals(username)) {
 			throw new UnknownAccountException();
 		}
-		
-		if (!"123456".equals(password)) {
-			throw new IncorrectCredentialsException();
-		}
-		
-		AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, password, getName());
+
+		AuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(username, dbPassword, getName());
 		return authenticationInfo;
 	}
 
